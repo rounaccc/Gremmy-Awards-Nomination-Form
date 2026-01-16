@@ -166,11 +166,22 @@ def submit_to_google_sheets(client, spreadsheet_name, worksheet_name, data):
         return False
 
 def main():
-    st.title("📋 Nomination Form")
-    st.markdown("---")
-
+    # Initialize form submission state
     if 'form_submitted' not in st.session_state:
         st.session_state['form_submitted'] = False
+    if 'show_success' not in st.session_state:
+        st.session_state['show_success'] = False
+    
+    st.title("📋 Nomination Form")
+    
+    # Show success message if form was just submitted
+    if st.session_state['show_success']:
+        st.success("✅ Form submitted successfully!")
+        st.balloons()
+        st.info("✅ Thank you! Your nomination has been recorded.")
+        st.session_state['show_success'] = False  # Clear the flag so balloons don't keep popping
+    
+    st.markdown("---")
     
     # Sidebar for Google Sheets configuration
     # with st.sidebar:
@@ -369,10 +380,8 @@ def main():
                         
                         # Submit to Google Sheets
                         if submit_to_google_sheets(client, spreadsheet_name, worksheet_name, data):
-                            st.success("✅ Form submitted successfully!")
-                            st.balloons()
                             st.session_state['form_submitted'] = True
-                            st.info("✅ Thank you! Your nomination has been recorded.")
+                            st.session_state['show_success'] = True
                             st.rerun()
                         else:
                             st.error("❌ Failed to submit form. Please try again.")
