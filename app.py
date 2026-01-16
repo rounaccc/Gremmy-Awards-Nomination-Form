@@ -278,10 +278,15 @@ def main():
             options.append(current_value)
         
         # Determine index
-        if current_value == "Select..." or current_value not in options:
+        # if current_value == "Select..." or current_value not in options:
+        #     default_index = 0
+        # else:
+        #     default_index = options.index(current_value)
+        # CHANGES MADE HERE CHECK HERE
+        try:
+            default_index = options.index(current_value) if current_value in options else 0
+        except ValueError:
             default_index = 0
-        else:
-            default_index = options.index(current_value)
         
         selected = st.selectbox(
             f"{i+1}. {question} *",
@@ -343,43 +348,47 @@ def main():
         else:
             # Check Google Sheets configuration
             if not credentials_json:
-                st.error("Please configure Google Sheets credentials in the sidebar")
+                st.error("Please configure Google Sheets credentials")
             else:
-                # Connect to Google Sheets
-                client = connect_to_google_sheets(credentials_json)
-                
-                if client:
-                    # Prepare data
-                    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                    data = [timestamp, full_name, email_id] + answers_less_than_1_5 + answers_more_than_1_5
+                with st.spinner("Submitting form..."):
+                    # Connect to Google Sheets
+                    client = connect_to_google_sheets(credentials_json)
                     
-                    # Submit to Google Sheets
-                    if submit_to_google_sheets(client, spreadsheet_name, worksheet_name, data):
-                        st.success("✅ Form submitted successfully!")
-                        st.balloons()
-
-                        st.rerun() # CHECK HERE CHANGES MADE
+                    if client:
+                        # Prepare data
+                        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                        data = [timestamp, full_name, email_id] + answers_less_than_1_5 + answers_more_than_1_5
                         
-                        # Clear form by clearing all question keys
-                        for i in range(len(QUESTIONS_LESS_THAN_1_5_YOE)):
-                            key = f"less_1_5_{i}"
-                            if key in st.session_state:
-                                del st.session_state[key]
-                        
-                        for i in range(len(QUESTIONS_MORE_THAN_1_5_YOE)):
-                            key = f"more_1_5_{i}"
-                            if key in st.session_state:
-                                del st.session_state[key]
-                        
-                        # Clear name and email
-                        if 'full_name' in st.session_state:
-                            del st.session_state['full_name']
-                        if 'email_id' in st.session_state:
-                            del st.session_state['email_id']
-                        
-                        st.rerun()
-                    else:
-                        st.error("Failed to submit form. Please try again.")
+                        # Submit to Google Sheets
+                        if submit_to_google_sheets(client, spreadsheet_name, worksheet_name, data):
+                            st.success("✅ Form submitted successfully!")
+                            st.balloons()
+                            
+                            # Clear form by clearing all question keys BEFORE rerun
+                            for i in range(len(QUESTIONS_LESS_THAN_1_5_YOE)):
+                                key = f"less_1_5_{i}"
+                                if key in st.session_state:
+                                    del st.session_state[key]
+                            
+                            for i in range(len(QUESTIONS_MORE_THAN_1_5_YOE)):
+                                key = f"more_1_5_{i}"
+                                if key in st.session_state:
+                                    del st.session_state[key]
+                            
+                            # Clear name and email
+                            if 'full_name' in st.session_state:
+                                del st.session_state['full_name']
+                            if 'email_id' in st.session_state:
+                                del st.session_state['email_id']
+                            
+                            # Add a small delay so user can see the success message
+                            import time
+                            time.sleep(2)
+                            
+                            # NOW rerun (only once!)
+                            st.rerun()
+                        else:
+                            st.error("❌ Failed to submit form. Please try again.")
 
 if __name__ == "__main__":
     main()
