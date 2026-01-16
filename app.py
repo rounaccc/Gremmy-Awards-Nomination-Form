@@ -168,6 +168,9 @@ def submit_to_google_sheets(client, spreadsheet_name, worksheet_name, data):
 def main():
     st.title("📋 Nomination Form")
     st.markdown("---")
+
+    if 'form_submitted' not in st.session_state:
+        st.session_state['form_submitted'] = False
     
     # Sidebar for Google Sheets configuration
     # with st.sidebar:
@@ -316,9 +319,14 @@ def main():
     # Submit button
     st.markdown("---")
     col1, col2, col3 = st.columns([1, 1, 1])
-    
+
     with col2:
-        submit_button = st.button("Submit Form", type="primary", use_container_width=True)
+        submit_button = st.button(
+            "Submit Form" if not st.session_state['form_submitted'] else "Already Submitted ✓",
+            type="primary",
+            use_container_width=True,
+            disabled=st.session_state['form_submitted']
+        )
     
     if submit_button:
         # Validation
@@ -363,29 +371,8 @@ def main():
                         if submit_to_google_sheets(client, spreadsheet_name, worksheet_name, data):
                             st.success("✅ Form submitted successfully!")
                             st.balloons()
-                            
-                            # Clear form by clearing all question keys BEFORE rerun
-                            for i in range(len(QUESTIONS_LESS_THAN_1_5_YOE)):
-                                key = f"less_1_5_{i}"
-                                if key in st.session_state:
-                                    del st.session_state[key]
-                            
-                            for i in range(len(QUESTIONS_MORE_THAN_1_5_YOE)):
-                                key = f"more_1_5_{i}"
-                                if key in st.session_state:
-                                    del st.session_state[key]
-                            
-                            # Clear name and email
-                            if 'full_name' in st.session_state:
-                                del st.session_state['full_name']
-                            if 'email_id' in st.session_state:
-                                del st.session_state['email_id']
-                            
-                            # Add a small delay so user can see the success message
-                            import time
-                            time.sleep(2)
-                            
-                            # NOW rerun (only once!)
+                            st.session_state['form_submitted'] = True
+                            st.info("✅ Thank you! Your nomination has been recorded.")
                             st.rerun()
                         else:
                             st.error("❌ Failed to submit form. Please try again.")
