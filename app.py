@@ -259,7 +259,7 @@ def main():
     # Personal Information Section - Only Employee ID
     st.header("👤 Personal Information")
     
-    employee_id = st.text_input("Employee ID *", placeholder="Enter your employee ID", key="employee_id")
+    employee_id = st.text_input("Employee ID * (case-sensitive)", placeholder="Enter your employee ID", key="employee_id")
     
     # Look up and display full name
     if employee_id and employee_id.strip():
