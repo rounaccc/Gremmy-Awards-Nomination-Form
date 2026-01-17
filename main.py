@@ -18,6 +18,62 @@ SCOPE = [
     "https://www.googleapis.com/auth/drive"
 ]
 
+# Employee ID to Name mapping - REPLACE THIS WITH YOUR ACTUAL DATA
+EMPLOYEE_ID_TO_NAME = {
+    "G14174": "Nivita Shetty",
+    "G14312": "Neal Shah",
+    "G14330": "Sneha Banerjee",
+    "G14340": "Prachi Thakkar",
+    "G14404": "Nehal Bajaj",
+    "G14426": "Muskan Jhunjhunwala",
+    "G15884": "Saanchi Bathla",
+    "G16130": "Krisha Dedhia",
+    "G19514": "Simoni Jain",
+    "G19767": "Megha Bansal",
+    "G20008": "Ritika Jalan",
+    "G21147": "Aakash Sethia",
+    "G21048": "Durgesh Singh",
+    "G26093": "Abhishhek Patil",
+    "G14209": "Vidur Bhatnagar",
+    "G14269": "Rhea Christie Anthonyraj",
+    "G17106": "Jainee Satra",
+    "G19788": "Devesh Newatia",
+    "G21598": "Divijaa Talwar",
+    "G22645": "Mohammad Masbah Khan",
+    "G23865": "Karan Agarwal",
+    "G26519": "Dimple Thanvi",
+    "G14310": "Nishita Kikani",
+    "G21830": "Janvee Shah",
+    "G20379": "Akshiti Vohra",
+    "G21200": "Raunak Makhija",
+    "G21469": "Krishu Agrawal",
+    "G22699": "Amisha Khetan",
+    "G23279": "Vinayak Karnawat",
+    "G26179": "Aman Nirmal",
+    "G26432": "Yuvrajsingh Rajpurohit",
+    "G13710": "Yerra Haritha",
+    "G23453": "Aditya Padia",
+    "G23926": "Mihir Furiya",
+    "G24978": "Bhavana Sharma",
+    "G25335": "Samia Malik",
+    "G27570": "Vidhi Shah",
+    "G27786": "Sejal Suri",
+    "G27854": "Smit Mistry",
+    "G27413": "Het Ghelani",
+    "G27924": "Nishtha Thakkar",
+    "G28031": "Pakshal Mody",
+    "G28258": "Arya Raheja",
+    "G28346": "Rounak Bachwani",
+    "G29193": "Vidhi Maheshwari",
+    "G29440": "Husein Katwarawala",
+    "G29048": "Omkar Chavan",
+    "G29399": "Shriram Dayama",
+    "G29866": "Rajnandini Gupta",
+    "G30220": "Aayushi Lunia",
+    "G30202": "Ritika Nair",
+    "G30589": "Priyansi Sheth"
+}
+
 # Employee lists based on YOE
 PEOPLE_LESS_THAN_1_5_YOE = [
     "Abhishhek Patil", "Karan Agarwal", "Dimple Thanvi", "Aman Nirmal",
@@ -66,9 +122,11 @@ AWARDS_SECTION_2 = {
     "Jugaadu": "demo description"
 }
 
-def get_section_1_selections():
-    """Get all current selections from Section 1 only"""
+def get_all_selections():
+    """Get all current selections from both sections"""
     selections = []
+    
+    # Section 1: Get both <1.5 and >1.5 selections for each award
     for i in range(len(AWARDS_SECTION_1)):
         key_less = f"sec1_less_{i}"
         key_more = f"sec1_more_{i}"
@@ -81,11 +139,7 @@ def get_section_1_selections():
         if value_more and value_more != "Select...":
             selections.append(value_more)
     
-    return selections
-
-def get_section_2_selections():
-    """Get all current selections from Section 2 only"""
-    selections = []
+    # Section 2: Get single selection for each award
     for i in range(len(AWARDS_SECTION_2)):
         key = f"sec2_{i}"
         value = st.session_state.get(key, "Select...")
@@ -94,46 +148,13 @@ def get_section_2_selections():
     
     return selections
 
-def get_nomination_count_section_1():
-    """Get count of nominations for each person in Section 1 only"""
-    selections = get_section_1_selections()
+def get_global_nomination_count():
+    """Get count of nominations for each person across ALL sections"""
+    all_selections = get_all_selections()
     nomination_count = {}
-    for person in selections:
+    for person in all_selections:
         nomination_count[person] = nomination_count.get(person, 0) + 1
     return nomination_count
-
-def get_nomination_count_section_2():
-    """Get count of nominations for each person in Section 2 only"""
-    selections = get_section_2_selections()
-    nomination_count = {}
-    for person in selections:
-        nomination_count[person] = nomination_count.get(person, 0) + 1
-    return nomination_count
-
-def get_available_people(people_list, current_key, current_value, section):
-    """
-    Returns list of people available for selection from given people_list.
-    People who have been selected 2 times in the SAME section are excluded.
-    section: 1 or 2
-    """
-    if section == 1:
-        nomination_count = get_nomination_count_section_1()
-    else:
-        nomination_count = get_nomination_count_section_2()
-    
-    # Remove current selection from count to allow keeping it
-    if current_value and current_value != "Select...":
-        if current_value in nomination_count:
-            nomination_count[current_value] = nomination_count.get(current_value, 0) - 1
-    
-    # Build available list
-    available = []
-    for person in people_list:
-        count = nomination_count.get(person, 0)
-        if count < 2:
-            available.append(person)
-    
-    return available
 
 def connect_to_google_sheets(credentials_json):
     """Connect to Google Sheets using service account credentials"""
@@ -161,7 +182,7 @@ def submit_to_google_sheets(client, spreadsheet_name, worksheet_name, data):
                 worksheet = spreadsheet.add_worksheet(title=worksheet_name, rows=1000, cols=50)
                 
                 # Build headers
-                headers = ["Timestamp", "Full Name", "Employee ID", "Email ID"]
+                headers = ["Timestamp", "Employee ID", "Full Name"]
                 
                 # Section 1 headers (2 columns per award)
                 for award_name in AWARDS_SECTION_1.keys():
@@ -235,31 +256,20 @@ def main():
         st.error("⚠️ Please configure secrets.toml file with your Google credentials")
         st.stop()
     
-    # Personal Information Section
+    # Personal Information Section - Only Employee ID
     st.header("👤 Personal Information")
     
-    # First row - labels and inputs
-    col1, col2 = st.columns(2)
+    employee_id = st.text_input("Employee ID *", placeholder="Enter your employee ID", key="employee_id")
     
-    with col1:
-        full_name = st.text_input("Full Name *", placeholder="Enter your full name", key="full_name")
-    
-    with col2:
-        employee_id = st.text_input("Employee ID *", placeholder="Enter your employee ID", key="employee_id")
-    
-    # Second row - email
-    st.markdown("Email *")
-    col_email, col_domain = st.columns([4, 2])
-    with col_email:
-        email_username = st.text_input("Email username", placeholder="username", key="email_username", label_visibility="collapsed")
-    with col_domain:
-        email_domain = st.selectbox(
-            "Email domain",
-            options=["@ajg.com", "@penunderwriting.com", "@artexrisk.com", "@rpsins.com", "@GallagherRe.com"],
-            key="email_domain",
-            label_visibility="collapsed"
-        )
-    email_id = email_username + email_domain if email_username else ""
+    # Look up and display full name
+    if employee_id and employee_id.strip():
+        full_name = EMPLOYEE_ID_TO_NAME.get(employee_id.strip(), "")
+        if full_name:
+            st.markdown(f"*{full_name}*")
+        else:
+            st.warning("⚠️ Employee ID not found. Please check and try again.")
+    else:
+        full_name = ""
     
     st.markdown("---")
     
@@ -267,6 +277,9 @@ def main():
     st.header("🎖️ Section 1: Awards with YOE-Based Nominations")
     st.markdown("*Each award requires 2 nominations: one from <1.5 YOE and one from >1.5 YOE*")
     st.markdown("---")
+    
+    # Get current nomination counts
+    nomination_count = get_global_nomination_count()
     
     answers_section_1 = []
     for i, (award_name, description) in enumerate(AWARDS_SECTION_1.items()):
@@ -279,11 +292,8 @@ def main():
         with col1:
             key_less = f"sec1_less_{i}"
             current_value_less = st.session_state.get(key_less, "Select...")
-            available_less = get_available_people(PEOPLE_LESS_THAN_1_5_YOE, key_less, current_value_less, section=1)
-            options_less = ["Select..."] + available_less
             
-            if current_value_less and current_value_less != "Select..." and current_value_less not in options_less:
-                options_less.append(current_value_less)
+            options_less = ["Select..."] + PEOPLE_LESS_THAN_1_5_YOE
             
             try:
                 default_index_less = options_less.index(current_value_less) if current_value_less in options_less else 0
@@ -297,17 +307,24 @@ def main():
                 index=default_index_less
             )
             
+            # Check if person has been nominated 2 times
+            if selected_less and selected_less != "Select...":
+                count = nomination_count.get(selected_less, 0)
+                # Don't count current selection
+                if current_value_less == selected_less:
+                    count = count - 1 if count > 0 else 0
+                
+                if count >= 2:
+                    st.warning(f"⚠️ {selected_less} has already been nominated 2 times. Please choose another.")
+            
             answers_section_1.append(selected_less if selected_less != "Select..." else "")
         
         # Dropdown for >1.5 YOE
         with col2:
             key_more = f"sec1_more_{i}"
             current_value_more = st.session_state.get(key_more, "Select...")
-            available_more = get_available_people(PEOPLE_MORE_THAN_1_5_YOE, key_more, current_value_more, section=1)
-            options_more = ["Select..."] + available_more
             
-            if current_value_more and current_value_more != "Select..." and current_value_more not in options_more:
-                options_more.append(current_value_more)
+            options_more = ["Select..."] + PEOPLE_MORE_THAN_1_5_YOE
             
             try:
                 default_index_more = options_more.index(current_value_more) if current_value_more in options_more else 0
@@ -320,6 +337,16 @@ def main():
                 key=key_more,
                 index=default_index_more
             )
+            
+            # Check if person has been nominated 2 times
+            if selected_more and selected_more != "Select...":
+                count = nomination_count.get(selected_more, 0)
+                # Don't count current selection
+                if current_value_more == selected_more:
+                    count = count - 1 if count > 0 else 0
+                
+                if count >= 2:
+                    st.warning(f"⚠️ {selected_more} has already been nominated 2 times. Please choose another.")
             
             answers_section_1.append(selected_more if selected_more != "Select..." else "")
         
@@ -337,11 +364,8 @@ def main():
         
         key = f"sec2_{i}"
         current_value = st.session_state.get(key, "Select...")
-        available_all = get_available_people(ALL_PEOPLE, key, current_value, section=2)
-        options_all = ["Select..."] + available_all
         
-        if current_value and current_value != "Select..." and current_value not in options_all:
-            options_all.append(current_value)
+        options_all = ["Select..."] + ALL_PEOPLE
         
         try:
             default_index = options_all.index(current_value) if current_value in options_all else 0
@@ -355,61 +379,71 @@ def main():
             index=default_index
         )
         
+        # Check if person has been nominated 2 times
+        if selected and selected != "Select...":
+            count = nomination_count.get(selected, 0)
+            # Don't count current selection
+            if current_value == selected:
+                count = count - 1 if count > 0 else 0
+            
+            if count >= 2:
+                st.warning(f"⚠️ {selected} has already been nominated 2 times. Please choose another.")
+        
         answers_section_2.append(selected if selected != "Select..." else "")
         st.markdown("---")
     
-    # Display nomination summary
-    with st.expander("📊 Your Nominations Summary", expanded=False):
-        # Section 1 Summary
-        st.markdown("#### 🎖️ Section 1: YOE-Based Awards")
+    # Display nomination summary - ALWAYS VISIBLE (no expander)
+    st.markdown("---")
+    st.markdown("## 📊 Your Nominations Summary")
+    
+    # Section 1 Summary
+    st.markdown("#### 🎖️ Section 1: YOE-Based Awards")
+    
+    sec1_data = []
+    for i, (award_name, description) in enumerate(AWARDS_SECTION_1.items()):
+        key_less = f"sec1_less_{i}"
+        key_more = f"sec1_more_{i}"
         
-        sec1_data = []
-        for i, (award_name, description) in enumerate(AWARDS_SECTION_1.items()):
-            key_less = f"sec1_less_{i}"
-            key_more = f"sec1_more_{i}"
-            
-            nominee_less = st.session_state.get(key_less, "Select...")
-            nominee_more = st.session_state.get(key_more, "Select...")
-            
-            less_display = nominee_less if nominee_less != "Select..." else "—"
-            more_display = nominee_more if nominee_more != "Select..." else "—"
-            
-            sec1_data.append({
-                "Award": award_name,
-                "<1.5 YOE": less_display,
-                ">1.5 YOE": more_display
-            })
+        nominee_less = st.session_state.get(key_less, "Select...")
+        nominee_more = st.session_state.get(key_more, "Select...")
         
-        if sec1_data:
-            import pandas as pd
-            df_sec1 = pd.DataFrame(sec1_data)
-            st.dataframe(df_sec1, use_container_width=True, hide_index=True)
-        else:
-            st.write("*No nominations yet*")
+        less_display = nominee_less if nominee_less != "Select..." else "—"
+        more_display = nominee_more if nominee_more != "Select..." else "—"
         
-        st.markdown("---")
+        sec1_data.append({
+            "Award": award_name,
+            "<1.5 YOE": less_display,
+            ">1.5 YOE": more_display
+        })
+    
+    if sec1_data:
+        df_sec1 = pd.DataFrame(sec1_data)
+        st.dataframe(df_sec1, use_container_width=True, hide_index=True)
+    else:
+        st.write("*No nominations yet*")
+    
+    st.markdown("---")
+    
+    # Section 2 Summary
+    st.markdown("#### 🎯 Section 2: Open Awards")
+    
+    sec2_data = []
+    for i, (award_name, description) in enumerate(AWARDS_SECTION_2.items()):
+        key = f"sec2_{i}"
+        nominee = st.session_state.get(key, "Select...")
         
-        # Section 2 Summary
-        st.markdown("#### 🎯 Section 2: Open Awards")
+        nominee_display = nominee if nominee != "Select..." else "—"
         
-        sec2_data = []
-        for i, (award_name, description) in enumerate(AWARDS_SECTION_2.items()):
-            key = f"sec2_{i}"
-            nominee = st.session_state.get(key, "Select...")
-            
-            nominee_display = nominee if nominee != "Select..." else "—"
-            
-            sec2_data.append({
-                "Award": award_name,
-                "Nominee": nominee_display
-            })
-        
-        if sec2_data:
-            import pandas as pd
-            df_sec2 = pd.DataFrame(sec2_data)
-            st.dataframe(df_sec2, use_container_width=True, hide_index=True)
-        else:
-            st.write("*No nominations yet*")
+        sec2_data.append({
+            "Award": award_name,
+            "Nominee": nominee_display
+        })
+    
+    if sec2_data:
+        df_sec2 = pd.DataFrame(sec2_data)
+        st.dataframe(df_sec2, use_container_width=True, hide_index=True)
+    else:
+        st.write("*No nominations yet*")
     
     # Submit button
     st.markdown("---")
@@ -427,16 +461,10 @@ def main():
         # Validation
         errors = []
         
-        if not full_name or not full_name.strip():
-            errors.append("Full Name is required")
-        
         if not employee_id or not employee_id.strip():
             errors.append("Employee ID is required")
-        
-        if not email_username or not email_username.strip():
-            errors.append("Email is required")
-        elif "@" in email_username:
-            errors.append("Email username should not contain @ symbol. Please use only the username part.")
+        elif not full_name:
+            errors.append("Employee ID not found in system. Please check your Employee ID.")
         
         # Check Section 1 answers (all pairs must be answered)
         for i in range(len(AWARDS_SECTION_1)):
@@ -466,7 +494,7 @@ def main():
                     
                     if client:
                         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                        data = [timestamp, full_name, employee_id, email_id] + answers_section_1 + answers_section_2
+                        data = [timestamp, employee_id, full_name] + answers_section_1 + answers_section_2
                         
                         if submit_to_google_sheets(client, spreadsheet_name, worksheet_name, data):
                             st.session_state['form_submitted'] = True
