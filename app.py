@@ -99,10 +99,10 @@ ALL_PEOPLE = PEOPLE_LESS_THAN_1_5_YOE + PEOPLE_MORE_THAN_1_5_YOE
 
 # Awards for Section 1 (2 nominations: one from each YOE group)
 AWARDS_SECTION_1 = {
-    "Just a chill guy": "Aag lagi basti mei, tera bhai masti mei.",
+    "Just a Chill Guy": "Aag lagi basti mei, tera bhai masti mei.",
     "ChatterBox": "The podcast without a mic.",
     "Human Serotonin": "Golder retreiver energy.",
-    "Human Stack Overflow": "demo description",
+    "Human Stack Overflow": "Office ka live solution engine.",
     "Sassy Comeback": "Mic drop master. Savage one liners.",
     "Silent Killer": "Less talks, more impact.",
     "Bade Miyan Chote Miyan": "Double trouble in the best way."
@@ -111,12 +111,12 @@ AWARDS_SECTION_1 = {
 # Awards for Section 2 (1 nomination: anyone from any group)
 AWARDS_SECTION_2 = {
     "High on Caffeine": "Always ready. Always charged.",
-    "IT Issues, Ctrl+Alt": "demo description",
+    "IT Issues": "Jinka kaam kamm, IT complaint zayada.",
     "Digital Ghost": "Nazar kamm ata hai, but kahani sab jaanta hai.",
-    "In the Zone": "demo description",
+    "In the Zone": "Delulu is the only solulu.",
     "Jack of All": "Google se bhi zyada gyaan.",
-    "Too pure for this world": "Ekdum innocent seedha sa thoda naive baccha.",
-    "Overqualified for seedha life": "Jalebi jitna seedha.",
+    "Too Pure for this World": "Ekdum innocent seedha sa thoda naive baccha.",
+    "Overqualified for Seedha Life": "Jalebi jitna seedha.",
     "Self-Appreciation": "Likely to laugh at their own jokes.",
     "Karam to Kaand": "Starts with good intention...but somehow always ends in chaos.",
     "Jugaadu": "If there is a problem this, person will workaround no matter what."
