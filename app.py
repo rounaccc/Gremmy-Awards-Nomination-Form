@@ -99,27 +99,27 @@ ALL_PEOPLE = PEOPLE_LESS_THAN_1_5_YOE + PEOPLE_MORE_THAN_1_5_YOE
 
 # Awards for Section 1 (2 nominations: one from each YOE group)
 AWARDS_SECTION_1 = {
-    "Just a chill guy": "Aag lagi basti mein, tera bhai masti mein",
-    "ChatterBox/Essayist": "demo description",
-    "Human Serotonin": "demo description",
-    "Tech Related, Human Stack overflow": "demo description",
-    "Sassy Comeback/One liners": "demo description",
-    "Silent Killer (Less talks, more impact)": "demo description",
-    "Bade miyan Chote Miyan": "demo description"
+    "Just a chill guy": "Aag lagi basti mei, tera bhai masti mei.",
+    "ChatterBox": "The podcast without a mic.",
+    "Human Serotonin": "Golder retreiver energy.",
+    "Human Stack Overflow": "demo description",
+    "Sassy Comeback": "Mic drop master. Savage one liners.",
+    "Silent Killer": "Less talks, more impact.",
+    "Bade Miyan Chote Miyan": "Double trouble in the best way."
 }
 
 # Awards for Section 2 (1 nomination: anyone from any group)
 AWARDS_SECTION_2 = {
-    "High on Caffeine": "demo description",
-    "IT Issues, Cntrl+Alt": "demo description",
-    "Digital Ghost": "demo description",
+    "High on Caffeine": "Always ready. Always charged.",
+    "IT Issues, Ctrl+Alt": "demo description",
+    "Digital Ghost": "Nazar kamm ata hai, but kahani sab jaanta hai.",
     "In the Zone": "demo description",
-    "Jack of All": "Google se bhi zyada gyaan",
-    "Seedha": "demo description",
-    "Tedha": "demo description",
-    "Likely to laugh at their own jokes": "demo description",
-    "Karam to Kaand": "demo description",
-    "Jugaadu": "demo description"
+    "Jack of All": "Google se bhi zyada gyaan.",
+    "Too pure for this world": "Ekdum innocent seedha sa thoda naive baccha.",
+    "Overqualified for seedha life": "Jalebi jitna seedha.",
+    "Self-Appreciation": "Likely to laugh at their own jokes.",
+    "Karam to Kaand": "Starts with good intention...but somehow always ends in chaos.",
+    "Jugaadu": "If there is a problem this, person will workaround no matter what."
 }
 
 def get_all_selections():
