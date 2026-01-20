@@ -105,21 +105,21 @@ AWARDS_SECTION_1 = {
     "Human Stack Overflow": "Office ka live solution engine.",
     "Sassy Comeback": "Mic drop master. Savage one liners.",
     "Silent Killer": "Less talks, more impact.",
-    "Bade Miyan Chote Miyan": "Double trouble in the best way."
+    "Bade Miyan Chote Miyan": "Double trouble in the best way." # CHANGE
 }
 
 # Awards for Section 2 (1 nomination: anyone from any group)
 AWARDS_SECTION_2 = {
     "High on Caffeine": "Always ready. Always charged.",
-    "IT Issues": "Jinka kaam kamm, IT complaint zayada.",
+    "IT Issues": "Jinka kaam kamm, IT complaint zayada.", # CHANGE
     "Digital Ghost": "Nazar kamm ata hai, but kahani sab jaanta hai.",
-    "In the Zone": "Delulu is the only solulu.",
+    "No Filter, Full Volume": "", # CHANGE
     "Jack of All": "Google se bhi zyada gyaan.",
     "Too Pure for this World": "Ekdum innocent seedha sa thoda naive baccha.",
     "Overqualified for Seedha Life": "Jalebi jitna seedha.",
     "Self-Appreciation": "Likely to laugh at their own jokes.",
     "Karam to Kaand": "Starts with good intention...but somehow always ends in chaos.",
-    "Jugaadu": "If there is a problem this, person will workaround no matter what."
+    "Jugaadu": "If there is a problem, this person will find a workaround no matter what."
 }
 
 def get_all_selections():
@@ -354,7 +354,7 @@ def main():
     
     # SECTION 2: Awards with 1 nomination (anyone)
     st.header("🎯 Section 2: Awards with Open Nominations")
-    st.markdown("*Each award requires 1 nomination from anyone*")
+    st.markdown("*Each award requires 1 nomination*")
     st.markdown("---")
     
     answers_section_2 = []
