@@ -481,6 +481,17 @@ def main():
             if not answer:
                 errors.append(f"Section 2, Award {i+1} is required")
         
+        # Check for over-nomination (more than 2 times)
+        final_nomination_count = {}
+        all_answers = answers_section_1 + answers_section_2
+        for person in all_answers:
+            if person:  # Skip empty selections
+                final_nomination_count[person] = final_nomination_count.get(person, 0) + 1
+        
+        for person, count in final_nomination_count.items():
+            if count > 2:
+                errors.append(f"❌ {person} has been nominated {count} times. Maximum allowed is 2 nominations per person.")
+        
         if errors:
             st.error("Please fix the following errors:")
             for error in errors:
