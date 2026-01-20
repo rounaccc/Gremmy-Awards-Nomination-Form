@@ -105,15 +105,15 @@ AWARDS_SECTION_1 = {
     "Human Stack Overflow": "Office ka live solution engine.",
     "Sassy Comeback": "Mic drop master. Savage one liners.",
     "Silent Killer": "Less talks, more impact.",
-    "Bade Miyan Chote Miyan": "Double trouble in the best way." # CHANGE
+    "Bade Miyan Chote Miyan": "Office ki iconic jodi—Bade Miyan ki calm aur Chote Miyan ki charm, dono saath ho toh kaam bhi hota hai aur comedy bhi!" 
 }
 
 # Awards for Section 2 (1 nomination: anyone from any group)
 AWARDS_SECTION_2 = {
     "High on Caffeine": "Always ready. Always charged.",
-    "IT Issues": "Jinka kaam kamm, IT complaint zayada.", # CHANGE
+    "IT Issues": "Kaam toh full josh mein karne ka hai, bas IT issues har dusre din brake laga dete hain.",
     "Digital Ghost": "Nazar kamm ata hai, but kahani sab jaanta hai.",
-    "No Filter, Full Volume": "", # CHANGE
+    "No Filter, Full Volume": "Dil mein jo aata hai, woh zabaan par...bina kisi filter ke.",
     "Jack of All": "Google se bhi zyada gyaan.",
     "Too Pure for this World": "Ekdum innocent seedha sa thoda naive baccha.",
     "Overqualified for Seedha Life": "Jalebi jitna seedha.",
