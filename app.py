@@ -75,17 +75,17 @@ EMPLOYEE_ID_TO_NAME = {
     "G30986": "Avanti Joshi"
 }
 
-# Employee lists based on YOE
-PEOPLE_LESS_THAN_1_5_YOE = [
+# Employee lists based on YOE (sorted alphabetically)
+PEOPLE_LESS_THAN_1_5_YOE = sorted([
     "Abhishhek Patil", "Karan Agarwal", "Dimple Thanvi", "Aman Nirmal",
     "Yuvrajsingh Rajpurohit", "Mihir Furiya", "Bhavana Sharma", "Samia Malik",
     "Vidhi Shah", "Sejal Suri", "Smit Mistry", "Het Ghelani",
     "Nishtha Thakkar", "Pakshal Mody", "Arya Raheja", "Rounak Bachwani",
     "Vidhi Maheshwari", "Husein Katwarawala", "Omkar Chavan", "Shriram Dayama",
     "Rajnandini Gupta", "Aayushi Lunia", "Ritika Nair", "Priyansi Sheth", "Avanti Joshi"
-]
+])
 
-PEOPLE_MORE_THAN_1_5_YOE = [
+PEOPLE_MORE_THAN_1_5_YOE = sorted([
     "Nivita Shetty", "Neal Shah", "Sneha Banerjee", "Prachi Thakkar",
     "Nehal Bajaj", "Muskan Jhunjhunwala", "Saanchi Bathla", "Krisha Dedhia",
     "Simoni Jain", "Megha Bansal", "Ritika Jalan", "Aakash Sethia",
@@ -93,7 +93,7 @@ PEOPLE_MORE_THAN_1_5_YOE = [
     "Devesh Newatia", "Divijaa Talwar", "Mohammad Masbah Khan", "Nishita Kikani",
     "Janvee Shah", "Akshiti Vohra", "Raunak Makhija", "Krishu Agrawal",
     "Amisha Khetan", "Vinayak Karnawat", "Yerra Haritha", "Aditya Padia"
-]
+])
 
 # All people combined for tracking nominations
 ALL_PEOPLE = PEOPLE_LESS_THAN_1_5_YOE + PEOPLE_MORE_THAN_1_5_YOE
