@@ -100,7 +100,7 @@ ALL_PEOPLE = PEOPLE_LESS_THAN_1_5_YOE + PEOPLE_MORE_THAN_1_5_YOE
 
 # Awards for Section 1 (2 nominations: one from each YOE group)
 AWARDS_SECTION_1 = {
-    "Just a Chill Guy": "Aag lagi basti mei, tera bhai masti mei.",
+    "Just a Chill Guy/Girl": "Aag lagi basti mei, yeh rahe masti mei.",
     "ChatterBox": "The podcast without a mic.",
     "Human Serotonin": "Golden retreiver energy.",
     "Human Stack Overflow": "Office ka live solution engine.",
