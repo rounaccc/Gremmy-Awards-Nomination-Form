@@ -102,7 +102,7 @@ ALL_PEOPLE = PEOPLE_LESS_THAN_1_5_YOE + PEOPLE_MORE_THAN_1_5_YOE
 AWARDS_SECTION_1 = {
     "Just a Chill Guy": "Aag lagi basti mei, tera bhai masti mei.",
     "ChatterBox": "The podcast without a mic.",
-    "Human Serotonin": "Golder retreiver energy.",
+    "Human Serotonin": "Golden retreiver energy.",
     "Human Stack Overflow": "Office ka live solution engine.",
     "Sassy Comeback": "Mic drop master. Savage one liners.",
     "Silent Killer": "Less talks, more impact.",
@@ -187,7 +187,7 @@ def submit_to_google_sheets(client, spreadsheet_name, worksheet_name, data):
                 
                 # Section 1 headers (2 columns per award)
                 for award_name in AWARDS_SECTION_1.keys():
-                    headers.append(f"{award_name} (<1.5 Tenure)")
+                    headers.append(f"{award_name} (<=1.5 Tenure)")
                     headers.append(f"{award_name} (>1.5 Tenure)")
                 
                 # Section 2 headers (1 column per award)
@@ -236,7 +236,7 @@ def main():
     if 'show_success' not in st.session_state:
         st.session_state['show_success'] = False
     
-    st.title("🏆 Gremmy Awards Nomination Form")
+    st.title("🏆 Gremmy's 2026 Awards Nomination Form")
     
     # Show success message if form was just submitted
     if st.session_state['show_success']:
@@ -276,7 +276,7 @@ def main():
     
     # SECTION 1: Awards with 2 nominations (one from each YOE group)
     st.header("🎖️ Section 1: Awards with Tenure-Based Nominations")
-    st.markdown("*Each award requires 2 nominations: one from <1.5 Tenure and one from >1.5 Tenure*")
+    st.markdown("*Each award requires 2 nominations: one from <=1.5 Tenure and one from >1.5 Tenure, in Gallagher*")
     st.markdown("---")
     
     # Get current nomination counts
@@ -302,7 +302,7 @@ def main():
                 default_index_less = 0
             
             selected_less = st.selectbox(
-                "Nominate from <1.5 Tenure *",
+                "Nominate from <=1.5 Tenure *",
                 options=options_less,
                 key=key_less,
                 index=default_index_less
@@ -413,7 +413,7 @@ def main():
         
         sec1_data.append({
             "Award": award_name,
-            "<1.5 Tenure": less_display,
+            "<=1.5 Tenure": less_display,
             ">1.5 Tenure": more_display
         })
     
@@ -473,7 +473,7 @@ def main():
             more_idx = i * 2 + 1
             
             if not answers_section_1[less_idx]:
-                errors.append(f"Section 1, Award {i+1}: <1.5 Tenure nomination is required")
+                errors.append(f"Section 1, Award {i+1}: <=1.5 Tenure nomination is required")
             if not answers_section_1[more_idx]:
                 errors.append(f"Section 1, Award {i+1}: >1.5 Tenure nomination is required")
         
