@@ -186,8 +186,8 @@ def submit_to_google_sheets(client, spreadsheet_name, worksheet_name, data):
                 
                 # Section 1 headers (2 columns per award)
                 for award_name in AWARDS_SECTION_1.keys():
-                    headers.append(f"{award_name} (<1.5 YOE)")
-                    headers.append(f"{award_name} (>1.5 YOE)")
+                    headers.append(f"{award_name} (<1.5 Tenure)")
+                    headers.append(f"{award_name} (>1.5 Tenure)")
                 
                 # Section 2 headers (1 column per award)
                 for award_name in AWARDS_SECTION_2.keys():
@@ -274,8 +274,8 @@ def main():
     st.markdown("---")
     
     # SECTION 1: Awards with 2 nominations (one from each YOE group)
-    st.header("🎖️ Section 1: Awards with YOE-Based Nominations")
-    st.markdown("*Each award requires 2 nominations: one from <1.5 YOE and one from >1.5 YOE*")
+    st.header("🎖️ Section 1: Awards with Tenure-Based Nominations")
+    st.markdown("*Each award requires 2 nominations: one from <1.5 Tenure and one from >1.5 Tenure*")
     st.markdown("---")
     
     # Get current nomination counts
@@ -301,7 +301,7 @@ def main():
                 default_index_less = 0
             
             selected_less = st.selectbox(
-                "Nominate from <1.5 YOE *",
+                "Nominate from <1.5 Tenure *",
                 options=options_less,
                 key=key_less,
                 index=default_index_less
@@ -332,7 +332,7 @@ def main():
                 default_index_more = 0
             
             selected_more = st.selectbox(
-                "Nominate from >1.5 YOE *",
+                "Nominate from >1.5 Tenure *",
                 options=options_more,
                 key=key_more,
                 index=default_index_more
@@ -397,7 +397,7 @@ def main():
     st.markdown("## 📊 Your Nominations Summary")
     
     # Section 1 Summary
-    st.markdown("#### 🎖️ Section 1: YOE-Based Awards")
+    st.markdown("#### 🎖️ Section 1: Tenure-Based Awards")
     
     sec1_data = []
     for i, (award_name, description) in enumerate(AWARDS_SECTION_1.items()):
@@ -412,8 +412,8 @@ def main():
         
         sec1_data.append({
             "Award": award_name,
-            "<1.5 YOE": less_display,
-            ">1.5 YOE": more_display
+            "<1.5 Tenure": less_display,
+            ">1.5 Tenure": more_display
         })
     
     if sec1_data:
@@ -472,9 +472,9 @@ def main():
             more_idx = i * 2 + 1
             
             if not answers_section_1[less_idx]:
-                errors.append(f"Section 1, Award {i+1}: <1.5 YOE nomination is required")
+                errors.append(f"Section 1, Award {i+1}: <1.5 Tenure nomination is required")
             if not answers_section_1[more_idx]:
-                errors.append(f"Section 1, Award {i+1}: >1.5 YOE nomination is required")
+                errors.append(f"Section 1, Award {i+1}: >1.5 Tenure nomination is required")
         
         # Check Section 2 answers
         for i, answer in enumerate(answers_section_2):
