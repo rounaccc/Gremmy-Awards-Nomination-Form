@@ -103,7 +103,7 @@ AWARDS_SECTION_1 = {
     "Just a Chill Guy/Girl": "Aag lagi basti mei, yeh rahe masti mei.",
     "ChatterBox": "The podcast without a mic.",
     "Human Serotonin": "Golden retreiver energy.",
-    "Human Stack Overflow": "Office ka live solution engine.",
+    "Human Stack Overflow": "For the legend who replies in solutions, thinks in code.",
     "Sassy Comeback": "Mic drop master. Savage one liners.",
     "Silent Killer": "Less talks, more impact.",
     "Bade Miyan Chote Miyan": "Office ki iconic jodi—Bade Miyan ki calm aur Chote Miyan ki charm, dono saath ho toh kaam bhi hota hai aur comedy bhi!" 
