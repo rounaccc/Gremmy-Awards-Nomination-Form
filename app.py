@@ -71,7 +71,8 @@ EMPLOYEE_ID_TO_NAME = {
     "G29866": "Rajnandini Gupta",
     "G30220": "Aayushi Lunia",
     "G30202": "Ritika Nair",
-    "G30589": "Priyansi Sheth"
+    "G30589": "Priyansi Sheth",
+    "G30986": "Avanti Joshi"
 }
 
 # Employee lists based on YOE
@@ -81,7 +82,7 @@ PEOPLE_LESS_THAN_1_5_YOE = [
     "Vidhi Shah", "Sejal Suri", "Smit Mistry", "Het Ghelani",
     "Nishtha Thakkar", "Pakshal Mody", "Arya Raheja", "Rounak Bachwani",
     "Vidhi Maheshwari", "Husein Katwarawala", "Omkar Chavan", "Shriram Dayama",
-    "Rajnandini Gupta", "Aayushi Lunia", "Ritika Nair", "Priyansi Sheth"
+    "Rajnandini Gupta", "Aayushi Lunia", "Ritika Nair", "Priyansi Sheth", "Avanti Joshi"
 ]
 
 PEOPLE_MORE_THAN_1_5_YOE = [
