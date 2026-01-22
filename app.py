@@ -96,7 +96,7 @@ PEOPLE_MORE_THAN_1_5_YOE = sorted([
 ])
 
 # All people combined for tracking nominations
-ALL_PEOPLE = PEOPLE_LESS_THAN_1_5_YOE + PEOPLE_MORE_THAN_1_5_YOE
+ALL_PEOPLE = sorted(PEOPLE_LESS_THAN_1_5_YOE + PEOPLE_MORE_THAN_1_5_YOE)
 
 # Awards for Section 1 (2 nominations: one from each YOE group)
 AWARDS_SECTION_1 = {
